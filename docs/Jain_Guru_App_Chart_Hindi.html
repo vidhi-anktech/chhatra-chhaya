@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>पूज्य आचार्य श्री १०८ विभव सागर जी महाराज मोबाइल ऐप — सम्पूर्ण स्क्रीन एवं नेविगेशन चार्ट</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9C4221;
+      --primary-light: #FFF5F0;
+      --primary-dark: #6D2D14;
+      --secondary: #0D7377;
+      --text-main: #1F2937;
+      --text-muted: #4B5563;
+      --border: #E5E7EB;
+      --saffron: #D97706;
+      --gold: #B45309;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      background-color: #F8FAFC;
+      line-height: 1.6;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+
+    .header {
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 24px;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .badge-bar {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .badge-saffron { background: #FEF3C7; color: #92400E; }
+    .badge-primary { background: #FEE2E2; color: #991B1B; }
+    .badge-teal { background: #E0E7FF; color: #3730A3; }
+
+    h1 {
+      font-size: 26px;
+      color: var(--primary-dark);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin: 20px 0 30px 0;
+    }
+
+    .role-card {
+      background: #FAFAFA;
+      border: 1px solid var(--border);
+      border-top: 4px solid var(--primary);
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .role-card.admin { border-top-color: #DC2626; }
+    .role-card.sangh { border-top-color: #D97706; }
+    .role-card.user { border-top-color: #059669; }
+
+    .role-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .role-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    h2 {
+      font-size: 20px;
+      color: var(--primary-dark);
+      border-left: 5px solid var(--primary);
+      padding-left: 12px;
+      margin-top: 35px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    /* Tab Section Card */
+    .tab-section {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+
+    .tab-header {
+      background: var(--primary-light);
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .tab-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-badge {
+      font-size: 11.5px;
+      background: #FFFFFF;
+      padding: 3px 10px;
+      border-radius: 6px;
+      color: var(--primary);
+      font-weight: 600;
+      border: 1px solid #FECACA;
+    }
+
+    .screen-list {
+      padding: 16px 20px;
+    }
+
+    .screen-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .screen-item:last-child {
+      border-bottom: none;
+    }
+
+    .screen-name {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 3px;
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .screen-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-left: 20px;
+    }
+
+    .print-btn {
+      float: right;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .print-btn:hover { background: var(--primary-dark); }
+
+    .callout {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-left: 4px solid var(--saffron);
+      padding: 14px 18px;
+      border-radius: 6px;
+      margin: 18px 0;
+      font-size: 13.5px;
+      color: #92400E;
+    }
+
+    @media print {
+      body { background: #FFF; padding: 0; }
+      .container { box-shadow: none; border: none; padding: 0; max-width: 100%; }
+      .no-print { display: none !important; }
+      .tab-section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <button class="print-btn no-print" onclick="window.print()">🖨️ पीडीएफ में सेव करें / प्रिंट करें</button>
+
+    <div class="header">
+      <div class="badge-bar">
+        <span class="badge badge-saffron">दिगम्बर जैन परंपरा</span>
+        <span class="badge badge-primary">पूज्य आचार्य श्री १०८ विभव सागर जी महाराज</span>
+        <span class="badge badge-teal">मूल संघ एवं समस्त उप-संघ</span>
+      </div>
+      <h1>मोबाइल एप्लिकेशन: सम्पूर्ण स्क्रीन एवं नेविगेशन चार्ट</h1>
+      <div class="subtitle">स्मार्टफोन ऐप की समस्त स्क्रीन्स, ५ मुख्य टैब्स एवं ३-स्तरीय व्यवस्थापक प्रणाली का विस्तृत विवरण</div>
+    </div>
+
+    <!-- 3 Roles -->
+    <h2>१. त्रि-स्तरीय उपयोगकर्ता अधिकार (3-Tier User Roles)</h2>
+    <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+      अलग से कोई वेबसाइट बनाने की आवश्यकता नहीं है; ऐप के भीतर ही अधिकारों के आधार पर व्यवस्थापक (Admin) विकल्प खुलेंगे:
+    </p>
+
+    <div class="role-grid">
+      <div class="role-card admin">
+        <div class="role-title" style="color: #DC2626;">🛠️ १. मुख्य एडमिन (Super Admin)</div>
+        <div class="role-desc">
+          • केंद्रीय ट्रस्ट / आचार्य श्री कार्यालय के पास पूर्ण नियंत्रण<br>
+          • सभी उप-संघों को जोड़ना एवं संघ व्यवस्थापकों को अधिकार देना<br>
+          • मुख्य सूचनाएं, केंद्रीय पंचांग एवं साहित्य का संचालन<br>
+          • कम्युनिटी वॉल के पोस्ट को स्वीकृत (Approve) करना
+        </div>
+      </div>
+
+      <div class="role-card sangh">
+        <div class="role-title" style="color: #D97706;">📝 २. संघ (Up-Sangh Admin)</div>
+        <div class="role-desc">
+          • विशिष्ट मुनि / आर्यिका उप-संघ के सेवाभावी संयोजक<br>
+          • अपने पूज्य गुरुदेव के <strong>विहार की ताज़ा सूचना व कार्यक्रम</strong> पोस्ट करना<br>
+          • दैनिक प्रवचन का यूट्यूब लिंक या ऑडियो अपलोड करना<br>
+          • दीक्षा महोत्सव व धार्मिक आयोजनों के फोटो अपलोड करना
+        </div>
+      </div>
+
+      <div class="role-card user">
+        <div class="role-title" style="color: #059669;">🙏 ३. श्रद्धालु / श्रावक (User)</div>
+        <div class="role-desc">
+          • सामान्य श्रावक-श्राविका परिवार एवं युवा वर्ग<br>
+          • नित्य प्रवचन, सामायिक घड़ी, णमोकार माला, प्रतिक्रमण का उपयोग<br>
+          • अभक्ष्य एआई स्कैनर से बाजार की सामग्री की जांच<br>
+          • बिना किसी एडमिन झंझट के शांत, भक्तिमय अनुभव
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <strong>✨ संघ फ़िल्टर बार (Sangh Filter Bar):</strong> यदि किसी श्रद्धालु ने कोई विशिष्ट संघ नहीं चुना है, तो भी ऐप की प्रत्येक स्क्रीन पर सबसे ऊपर <code>[✨ सभी संघ] [आचार्य श्री संघ] [मुनि श्री A संघ] [मुनि श्री B संघ]</code> का फ़िल्टर बटन रहेगा, जिससे वे एक स्पर्श में किसी भी गुरुदेव की सामग्री देख सकते हैं।
+    </div>
+
+    <!-- 5 Tabs Breakdown -->
+    
+    <!-- Hindi Hierarchy Chart Image -->
+    <h2>स्क्रीन एवं नेविगेशन हाइरार्की चार्ट (Visual Sitemap Slide)</h2>
+    <div style="margin: 20px 0; text-align: center;">
+      <img src="Jain_Guru_App_Chart_Hindi.jpg" alt="पूज्य आचार्य श्री विभव सागर जी संघ स्क्रीन चार्ट" style="width: 100%; max-width: 900px; border-radius: 10px; border: 1px solid #CBD5E1; box-shadow: 0 4px 14px rgba(0,0,0,0.08);" />
+      <p style="font-size: 13px; color: #64748B; margin-top: 8px; font-style: italic;">चित्र १: पूज्य आचार्य श्री १०८ विभव सागर जी महाराज संघ एवं उप-संघ स्क्रीन नेविगेशन चार्ट (५ मुख्य हिंदी टैब्स सहित)</p>
+    </div>
+
+    <h2>२. ऐप की ५ मुख्य टैब्स एवं समस्त स्क्रीन्स का विवरण</h2>
+
+    <!-- TAB 1 -->
+    <div class="tab-section">
+      <div class="tab-header">
+        <div class="tab-title">🏠 टैब १: दैनिक होम (Home Dashboard)</div>
+        <div class="tab-badge">दैनिक मुख्य पृष्ठ</div>
+      </div>
+      <div class="screen-list">
+        <div class="screen-item">
+          <div class="screen-name">१.१ मुख्य डैशबोर्ड (Main Dashboard)</div>
+          <div class="screen-desc">आज का धर्म संदेश, आज का प्रवचन, <strong>आज की साधना</strong>, <strong>लाइव दर्शन</strong>, एवं <strong>आज का कार्यक्रम</strong> (हस्तलिखित नोट्स के अनुसार)। (Main Dashboard)</div>
+          <div class="screen-desc">पूज्य गुरुदेव का पावन चित्र, दैनिक मंगल अभिवादन, आज का पंचांग, मुख्य सूचनाएं एवं त्वरित साधना विकल्प।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">१.२ संघ फ़िल्टर चिप्स (Sangh Switcher Chips)</div>
+          <div class="screen-desc">समस्त संघ अथवा विशिष्ट उप-संघ के अनुसार होम स्क्रीन के प्रवचन व संदेश को तुरंत बदलने का विकल्प।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">१.३ आज का धर्म संदेश (Daily Sandesh Card)</div>
+          <div class="screen-desc">पूज्य गुरु महाराज का दैनिक प्रेरणादायी सुविचार एवं व्हाट्सएप स्टेटस पर तुरंत शेयर करने का बटन।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">१.४ आज का मुख्य प्रवचन प्लेयर (Today's Pravachan)</div>
+          <div class="screen-desc">आज की अमृत देशना का ऑडियो/वीडियो प्लेयर (स्क्रीन के भीतर ही अथवा फुल-स्क्रीन देखने की सुविधा)।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">१.५ आज की तिथि एवं पचक्खाण घड़ी (Tithi & Pachkhan Countdown)</div>
+          <div class="screen-desc">दिगम्बर तिथि (सुद/वद), सूर्योदय समय, नवकारसी (सूर्योदय + ४८ मिनट) एवं सूर्यास्त चौविहार का उल्टी गिनती टाइमर।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">१.६ संघ सूचना केंद्र (Notifications Center)</div>
+          <div class="screen-desc">गुरुदेव के पावन विहार आगमन, आगामी महोत्सव, एवं दसलक्षण पर्व संबंधी महत्वपूर्ण सूचनाएं।</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2 -->
+    <div class="tab-section">
+      <div class="tab-header">
+        <div class="tab-title">📚 टैब २: डिजिटल पुस्तकालय (Digital Library)</div>
+        <div class="tab-badge">शास्त्र, ग्रंथ एवं भजन</div>
+      </div>
+      <div class="screen-list">
+        <div class="screen-item">
+          <div class="screen-name">२.१ मुख्य ग्रंथ सूची (Library Catalog Feed)</div>
+          <div class="screen-desc">विधान पुस्तक, स्वाध्याय शास्त्र, गुरु प्रणीत साहित्य, बाल संस्कार, एवं लेख / प्रश्न-उत्तर।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.१.१ बाल संस्कार (Bal Sanskar - बच्चों हेतु संस्कार)</div>
+          <div class="screen-desc">जैन बाल कहानियाँ, पाठशाला नैतिक शिक्षा, एवं बच्चों के लिए सचित्र धार्मिक संस्कार।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.१.२ जनरल PDF (General PDF Downloads)</div>
+          <div class="screen-desc">संघ पत्रिकाएं, आमंत्रण पत्र, व्रत-नियम पम्पलेट एवं सामान्य धार्मिक पीडीएफ डाउनलोड।</div>
+          <div class="screen-desc">चार मुख्य श्रेणियां: विधान पुस्तक, स्वाध्याय शास्त्र, गुरु प्रणीत साहित्य, एवं लेख / प्रश्न-उत्तर।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.२ गुरु प्रणीत साहित्य (Guru Authored Books)</div>
+          <div class="screen-desc">पूज्य आचार्य श्री विभव सागर जी महाराज एवं शिष्य मुनि वृंद द्वारा लिखित मौलिक पुस्तकें व टीकाएं।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.३ भजन एवं महाकाव्य संग्रह (Bhajans & Mahakavya)</div>
+          <div class="screen-desc">गुरुदेव द्वारा रचित महाकाव्य, जैन स्तुतियां, आरती एवं भक्ति भजन (भजन के लिखित बोल / Lyrics सहित)।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.४ उच्च-गुणवत्ता पीडीएफ शास्त्र पाठक (PDF Scripture Reader)</div>
+          <div class="screen-desc">सौ से अधिक पृष्ठों के ग्रंथों को सरलता से पढ़ना, पृष्ठ ज़ूम, बुकमार्क, रात्रि मोड एवं बुजुर्गों हेतु बड़े अक्षर।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">२.५ पृष्ठभूमि ऑडियो ग्रंथ प्लेयर (Background Audio Player)</div>
+          <div class="screen-desc">मोबाइल स्क्रीन लॉक होने पर भी निरंतर ऑडियो प्रसारण, गति नियंत्रण (0.75x से 2x) एवं रात्रि स्लीप टाइमर।</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3 -->
+    <div class="tab-section">
+      <div class="tab-header">
+        <div class="tab-title">🙏 टैब ३: मेरी साधना (Sadhna & Ritual Tracker)</div>
+        <div class="tab-badge">नित्य धार्मिक क्रियाएं</div>
+      </div>
+      <div class="screen-list">
+        <div class="screen-item">
+          <div class="screen-name">३.१ दैनिक साधना डैशबोर्ड (Sadhna Dashboard)</div>
+          <div class="screen-desc">सामायिक, स्वाध्याय और णमोकार मंत्र माला के दैनिक नियम की निरंतरता (Streak) व रिकॉर्ड।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">३.२ ४८ मिनट सामायिक घड़ी (48-Minute Samayik Timer)</div>
+          <div class="screen-desc">प्रत्येक १२ मिनट (१/४ भाग) पर मधुर घंटी की ध्वनि, ईर्यापथिक पाठ, एवं सामायिक के दौरान मोबाइल का ऑटो-डीएनडी।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">३.३ णमोकार मंत्र माला काउंटर (Haptic Mala Counter)</div>
+          <div class="screen-desc">स्क्रीन पर कहीं भी स्पर्श करने पर कंपन (Vibration) के साथ १०८ मनकों की माला गिनती एवं कुल जाप संचय।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">३.४ चारों दिगम्बर प्रतिक्रमण (4 Digambar Pratikramans)</div>
+          <div class="screen-desc">① ईर्यापथ प्रतिक्रमण ② श्रावक प्रतिक्रमण (दैनिक) ③ श्रमण प्रतिक्रमण ④ पाक्षिक प्रतिक्रमण (पाठ व ऑडियो सहित)।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">३.५ संपूर्ण छहढाला एवं ९ भक्तियां (Chhahdhala & 9 Bhaktis)</div>
+          <div class="screen-desc">पंडित दौलतराम कृत छहढाला (छहों ढाला अर्थ सहित), बारह भावना, एवं सभी ९ दिगम्बर भक्तियां (योगी, सिद्ध, समाधि आदि)।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">३.६ आज का संकल्प एवं एक अच्छा कार्य (Daily Resolve & Good Deed)</div>
+          <div class="screen-desc">प्रातःकाल नियम चयन (चौविहार, रात्रि भोजन त्याग) एवं दिनभर में किए गए 'एक अच्छे कार्य' (जीवदया, परोपकार) का अंकन। (Sankalp Journal)</div>
+          <div class="screen-desc">प्रातःकाल नियम चयन (चौविहार, रात्रि भोजन त्याग) एवं सायंकाल आत्म-निरीक्षण कि आज क्या शुभ कार्य किया।</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4 -->
+    <div class="tab-section">
+      <div class="tab-header">
+        <div class="tab-title">📺 टैब ४: लाइव कार्यक्रम (Live Pravachan & Archives)</div>
+        <div class="tab-badge">सीधा प्रसारण एवं संग्रह</div>
+      </div>
+      <div class="screen-list">
+        <div class="screen-item">
+          <div class="screen-name">४.१ यूट्यूब लाइव प्रसारण एवं चैट (YouTube Live Embed)</div>
+          <div class="screen-desc">पूज्य गुरुदेव के प्रवचन एवं मंदिर जी के लाइव दर्शन का निःशुल्क प्रसारण एवं श्रद्धालुओं हेतु लाइव 'जय जिनेंद्र' चैट।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">४.२ पूर्व प्रवचन संग्रह (Past Pravachan Archives)</div>
+          <div class="screen-desc">विगत सभी प्रवचनों का क्रमबद्ध संग्रह, जिसे नगर, चातुर्मास अथवा विषय के आधार पर खोजा जा सकता है।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">४.३ २-मिनट एआई प्रवचन सारांश (2-Min AI Summary)</div>
+          <div class="screen-desc">१ घंटे के प्रवचन का मुख्य ३-४ बुलेट बिंदुओं में सार एवं व्हाट्सएप स्टेटस पर लगाने योग्य सुंदर चित्र कार्ड।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">४.४ आध्यात्मिक विषयवार खोज (Semantic Search)</div>
+          <div class="screen-desc">प्रश्न लिखकर खोजें (उदा: "क्रोध मुक्ति पर गुरुजी ने क्या कहा?") और सीधे उस समय के ऑडियो पर पहुंचें।</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 5 -->
+    <div class="tab-section">
+      <div class="tab-header">
+        <div class="tab-title">☰ टैब ५: अधिक / संघ केंद्र (More Tab & Utilities)</div>
+        <div class="tab-badge">विहार, गैलरी एवं सेवाएं</div>
+      </div>
+      <div class="screen-list">
+        <div class="screen-item">
+          <div class="screen-name">५.१ संघ-विशिष्ट विहार सूचना बोर्ड (Vihar Noticeboard)</div>
+          <div class="screen-desc">फ़िल्टर द्वारा चयनित गुरुदेव का वर्तमान प्रवास स्थल (क्षेत्र/मंदिर), आगामी विहार तिथि, दिशा एवं आहारचर्या समय।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.२ दीक्षा महोत्सव संग्रह (Diksha Mahotsav Albums)</div>
+          <div class="screen-desc">पूज्य आचार्य श्री विभव सागर जी महाराज के पावन सानिध्य में संपन्न हुए ऐतिहासिक मुनि/आर्यिका दीक्षा समारोहों के फोटो व वीडियो।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.३ ई-गैलरी (Photo Gallery)</div>
+          <div class="screen-desc">पंचकल्याणक, चातुर्मास, शोभायात्रा एवं धार्मिक आयोजनों के सुंदर चित्रों का एल्बम।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.४ दिगम्बर धार्मिक पंचांग (Digambar Calendar)</div>
+          <div class="screen-desc">दसलक्षण महापर्व, अष्टान्हिका, अष्टमी, चतुर्दशी, एवं तीर्थंकर कल्याणक की १००% ऑफलाइन गणना।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.५ सेवा एवं जीवदया हेल्पलाइन (Helpline Directory)</div>
+          <div class="screen-desc">घायल पक्षी/पशु एम्बुलेंस, स्थानीय गौशाला/पांजरापोल, एवं संघ सेवकों के सत्यापित फोन नंबर (१-टैप कॉलिंग सुविधा)।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.६ अभक्ष्य एआई फूड स्कैनर (Abhakshya Food Scanner)</div>
+          <div class="screen-desc">मोबाइल कैमरे से पैकेट के पीछे सामग्री सूची को स्कैन कर मांसाहारी तत्व (जिलेटिन, E120) व कंदमूल की तुरंत पहचान।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.७ गुरु परंपरा एवं दीक्षित शिष्य परिवार (Guru Parampara & Disciples)</div>
+          <div class="screen-desc">पूज्य आचार्य श्री का जीवन वृत्त, चारित्र, पट्टावली एवं उनके संघस्थ समस्त मुनि/आर्यिका वृंद की नामावली।</div>
+        </div>
+        <div class="screen-item">
+          <div class="screen-name">५.८ ऐप सेटिंग्स एवं भाषा चयन (Settings)</div>
+          <div class="screen-desc">हिंदी (डिफ़ॉल्ट), गुजराती व अंग्रेजी भाषा टॉगल, फ़ॉन्ट साइज घटाना/बढ़ाना, एवं पसंदीदा संघ का चयन।</div>
+        </div>
+        <div class="screen-item" style="background: #FFF7ED; padding: 10px; border-radius: 6px; margin-top: 6px;">
+          <div class="screen-name" style="color: #C2410C;">५.९ इन-ऐप संघ व्यवस्थापक कक्ष (In-App Admin Center)</div>
+          <div class="screen-desc" style="color: #7C2D12;">केवल <strong>एडमिन एवं संघ व्यवस्थापकों</strong> हेतु: सीधे मोबाइल से विहार का नया शहर डालना, प्रवचन अपलोड करना, एवं दीक्षा एल्बम जोड़ना।</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

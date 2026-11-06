@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Proposal &amp; Feature Transcription — Poojya Acharya Shri 108 Vibhav Sagarji Maharaj App</title>
+  <style>
+    :root {
+      --primary: #9C4221;
+      --primary-light: #FFF7ED;
+      --secondary: #0D7377;
+      --text-main: #1F2937;
+      --text-muted: #4B5563;
+      --border: #E5E7EB;
+      --bg-card: #FFFFFF;
+      --bg-page: #F8FAFC;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: var(--text-main); background: var(--bg-page); line-height: 1.6; padding: 40px 20px; }
+    .container { max-width: 960px; margin: 0 auto; background: #FFF; padding: 50px 60px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+    h1 { color: var(--primary); font-size: 28px; margin-bottom: 8px; }
+    .subtitle { color: var(--text-muted); font-size: 16px; margin-bottom: 28px; }
+    h2 { color: var(--secondary); font-size: 20px; margin-top: 36px; margin-bottom: 16px; border-bottom: 2px solid #E2E8F0; padding-bottom: 8px; }
+    h3 { font-size: 17px; margin-top: 20px; margin-bottom: 10px; color: #1E293B; }
+    p { margin-bottom: 14px; font-size: 15px; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    th { background: #F1F5F9; color: #334155; text-align: left; padding: 12px 14px; border: 1px solid var(--border); font-weight: 600; }
+    td { padding: 12px 14px; border: 1px solid var(--border); vertical-align: top; }
+    tr:nth-child(even) { background: #F8FAFC; }
+    .badge-core { background: #DEF7EC; color: #03543F; font-weight: 600; padding: 4px 8px; border-radius: 6px; font-size: 12px; display: inline-block; }
+    .badge-deferred { background: #FEF08A; color: #713F12; font-weight: 600; padding: 4px 8px; border-radius: 6px; font-size: 12px; display: inline-block; }
+    .badge-merged { background: #E0E7FF; color: #3730A3; font-weight: 600; padding: 4px 8px; border-radius: 6px; font-size: 12px; display: inline-block; }
+    .callout { background: var(--primary-light); border-left: 4px solid var(--primary); padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; font-size: 14.5px; }
+    .callout strong { color: var(--primary); }
+    ul { margin: 10px 0 16px 24px; font-size: 14.5px; }
+    li { margin-bottom: 6px; }
+    code { background: #F1F5F9; padding: 2px 6px; border-radius: 4px; font-size: 13px; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Poojya Acharya Shri 108 Vibhav Sagarji Maharaj App</h1>
+    <div class="subtitle">Comprehensive Feature Transcription, System Architecture &amp; Finalized Scope Document</div>
+
+    <div class="callout">
+      <strong>Executive Overview:</strong> A dedicated, ad-free Digambar Jain spiritual mobile application engineered with <strong>React Native Expo</strong>, <strong>Supabase PostgreSQL</strong>, and <strong>Firebase</strong> on a 100% free-tier architecture (/bin/zsh/month).
+    </div>
+
+    <h2>1. Finalized Architectural Decisions (Post-Meeting)</h2>
+    <ul>
+      <li><strong>Frictionless Devotee Onboarding:</strong> General users require <strong>NO password or OTP</strong>. On first launch, they enter <code>Name</code>, <code>Age</code>, and <code>City</code> and immediately access all features.</li>
+      <li><strong>In-App Admin &amp; Sangh Access:</strong> No separate web portal. Sangh coordinators and administrators securely log in directly within the mobile app to post Vihar notices, upload discourse links, and manage gallery photos.</li>
+      <li><strong>Splash &rarr; Language Selection:</strong> First launch presents a language picker (Hindi, English, Gujarati; default Hindi), switchable anytime in Settings.</li>
+      <li><strong>Continuous Ambient Background Audio:</strong> Soft ambient spiritual flute/chanting plays across app navigation, with auto-pause during media playback and an instant mute button in the header.</li>
+      <li><strong>Home Screen 'Dainik Niyam' &amp; Live Anumodna Wall:</strong> Devotees select their daily vow (e.g. <em>Ratri Bhojan Tyag</em>). Their name and city appear publicly in real time for spiritual rejoicing (अनुमोदना), followed by a morning check-in prompt the next day.</li>
+      <li><strong>Shravak Devotion Leaderboard:</strong> An engagement board in <em>Meri Sadhna</em> recognizing devotees based on Navkar Mala counts, Swadhyay reading minutes, Pratikraman completions, and Niyam streaks.</li>
+      <li><strong>Focused V1 Scope:</strong> 5 features have been deferred or merged (9 Bhaktis &amp; Chhahdhala, Seva &amp; Jeevdaya, Aaj Ka Sankalp/Ek Achha Karya, and Abhakshya Food Scanner) to maintain a fast, high-quality initial release.</li>
+    </ul>
+
+    <h2>2. Detailed Handwritten Notes Feature Transcription &amp; Scope Audit</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Hindi Term</th>
+          <th>English Feature</th>
+          <th>Detailed Functionality</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Digital Library</strong></td>
+          <td>डिजिटल पुस्तकालय</td>
+          <td>Digital Jinvaani Library</td>
+          <td>① विधान पुस्तक (Vidhan Path &amp; Pujan Vidhi)<br>② स्वाध्याय शास्त्र (Self-study Scriptures &amp; Agams)<br>③ बाल संस्कार (Kids moral stories &amp; paath)<br>④ भजन-आरती-महाकाव्य (Devotional hymns &amp; poetic epics)<br>⑤ लेख व प्रश्न-उत्तर (Articles &amp; Guru Q&amp;A)<br>⑥ ऑडियो बुक व जनरल PDF (Audiobooks &amp; General PDFs)</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Religious Calendar</strong></td>
+          <td>धार्मिक कैलेंडर व पच्चक्खाण</td>
+          <td>Digambar Calendar &amp; Panchang</td>
+          <td>Daily Jain Tithi, lunar date significance, Parva alerts (Ashtami, Chaturdashi, Paryushan), sunrise/sunset timings, and daily Pachkhan rules.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Travel Schedule</strong></td>
+          <td>विहार एवं कार्यक्रम</td>
+          <td>Vihar &amp; Event Schedule</td>
+          <td>Detailed vihar route, halting temples, and upcoming programs of Acharya Shri 108 Vibhav Sagarji Maharaj + current halting location updates of Up-Sanghs.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Social Compassion</strong></td>
+          <td>सेवा एवं जीवदया</td>
+          <td>Seva &amp; Jeevdaya Helplines</td>
+          <td>Emergency animal rescue directory, Gaushala contacts, and bird hospital listings.</td>
+          <td><span class="badge-deferred">Deferred for V1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Smart Search</strong></td>
+          <td>स्मार्ट सर्च</td>
+          <td>Smart Search</td>
+          <td>AI-powered semantic concept search across all scriptures, pravachan audio transcripts, and library books.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Home Dashboard</strong></td>
+          <td>होम पेज डैशबोर्ड</td>
+          <td>Home Dashboard</td>
+          <td>① दैनिक धर्म संदेश (Guru Daily Quote)<br>② आज का प्रवचन (Featured Discourse)<br>③ दैनिक नियम व अनुमोदना डैशबोर्ड (Live Community Niyam Feed)<br>④ लाइव दर्शन (Live Darshan Stream)<br>⑤ आज का कार्यक्रम (Today's Programs)<br>⑥ आज की तिथि व महत्व (Daily Tithi Header)</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Pratikraman</strong></td>
+          <td>४ दिगम्बर प्रतिक्रमण</td>
+          <td>4 Digambar Pratikramans</td>
+          <td>① इर्यापथ प्रतिक्रमण (Iryapath)<br>② दैवसिक/श्रावक प्रतिक्रमण (Daivik/Shravak)<br>③ श्रमण प्रतिक्रमण (Shraman)<br>④ पाक्षिक प्रतिक्रमण (Pakshik)<br>Complete with synchronized text and audio recital guide.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Devotional Stotras</strong></td>
+          <td>९ भक्तियां व छहढाला</td>
+          <td>9 Bhaktis &amp; Chhahdhala</td>
+          <td>Yogi, Siddh, Nandishwar, Samadhi, Jinvaani, Acharya, Chaitya, Panchguru, Shanti Bhaktis and Chhahdhala.</td>
+          <td><span class="badge-deferred">Deferred for V1</span></td>
+        </tr>
+        <tr>
+          <td><strong>Gallery &amp; Media</strong></td>
+          <td>दीक्षा महोत्सव व ई-गैलरी</td>
+          <td>Diksha Mahotsav &amp; Gallery</td>
+          <td>High-resolution photo albums of Diksha Mahotsavs, Panchkalyanak Pratishtha, Chaturmas events, and sangh pravachan gallery.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Guru Lineage</strong></td>
+          <td>जीवन परिचय व शिष्य परिवार</td>
+          <td>Guru Biography &amp; Lineage</td>
+          <td>Comprehensive detailed biography of Acharya Shri 108 Vibhav Sagarji Maharaj, accompanied by compact biographical overviews of Up-Sanghs &amp; Shishya Munis.</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Personal Sadhna</strong></td>
+          <td>मेरी साधना</td>
+          <td>Devotee Sadhna Suite</td>
+          <td>① ४८ मिनट सामायिक टाइमर (With 12-min meditative chimes)<br>② डिजिटल णमोकार माला (Haptic 108 counter)<br>③ ४ दिगम्बर प्रतिक्रमण<br>④ 🏆 श्रावक लीडरबोर्ड (Devotion Engagement Board)</td>
+          <td><span class="badge-core">Active Core (V1)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Daily Intention</strong></td>
+          <td>आज का संकल्प व एक अच्छा कार्य</td>
+          <td>Today's Resolve &amp; Good Deed</td>
+          <td>Daily micro-intention and virtuous deed tracker.</td>
+          <td><span class="badge-merged">Merged into दैनिक नियम</span></td>
+        </tr>
+        <tr>
+          <td><strong>AI Food Scanner</strong></td>
+          <td>अभक्ष्य एआई स्कैनर</td>
+          <td>Abhakshya Food Scanner</td>
+          <td>Camera-based packaged food ingredient scanner to detect non-Jain ingredients.</td>
+          <td><span class="badge-deferred">Deferred for V1</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. Finalized 5-Tab Screen Hierarchy</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Bottom Tab</th>
+          <th>Devotee User Screens &amp; Features</th>
+          <th>Admin &amp; Sangh Capabilities</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🏠 1. Home (होम)</strong></td>
+          <td>• Guru Dharm Sandesh (Daily quote &amp; banner)<br>• Today's Pravachan Player &amp; Highlight<br>• <strong>Dainik Niyam Checklist &amp; Live Anumodna Wall</strong><br>• Live Darshan Window &amp; Today's Schedule<br>• Jain Tithi, Sunrise/Sunset &amp; Panchang</td>
+          <td>Admin can update today's quote, set featured discourse video, and post urgent sangh announcements.</td>
+        </tr>
+        <tr>
+          <td><strong>📚 2. Library (पुस्तकालय)</strong></td>
+          <td>• Vidhan Pustak &amp; Pujan Path (PDF Reader)<br>• Swadhyay Granths &amp; Scriptures<br>• <strong>Bal Sanskar (Kids moral paath &amp; stories)</strong><br>• Bhajans, Aarti &amp; Mahakavya Poetry<br>• Spiritual Articles &amp; Guru Q&amp;A<br>• <strong>Audiobooks &amp; General PDF Library</strong></td>
+          <td>Admin &amp; Sangh can upload new book PDFs, stotra MP3 tracks, and educational youth content.</td>
+        </tr>
+        <tr>
+          <td><strong>🙏 3. Sadhna (साधना)</strong></td>
+          <td>• 48-Min Samayik Timer (with 12-min chimes)<br>• Digital Namokar Mantra Mala (108 counter)<br>• 4 Digambar Pratikramans (with audio guide)<br>• <strong>🏆 Shravak Devotion Leaderboard (Anumodna)</strong></td>
+          <td>Shared universal spiritual suite. Admin can view devotee participation statistics.</td>
+        </tr>
+        <tr>
+          <td><strong>📺 4. Live (लाइव)</strong></td>
+          <td>• YouTube Live Streaming (Embed &amp; Chat)<br>• Past Pravachan Audio &amp; Video Archives<br>• 2-Minute AI Pravachan Key Summaries<br>• Smart Semantic Search (pgvector)</td>
+          <td>Admin &amp; Sangh can start live streams, paste YouTube live URLs, and upload recorded discourse audio.</td>
+        </tr>
+        <tr>
+          <td><strong>☰ 5. Sangh &amp; More (संघ एवं अधिक)</strong></td>
+          <td>• <strong>Jeevan Parichay (Detailed Acharya Shri + Compact Up-Sangh)</strong><br>• <strong>Vihar Updates &amp; Halting Map (Acharya Shri + Up-Sanghs)</strong><br>• Digambar Monthly Lunisolar Calendar &amp; Pachkhan<br>• Diksha Mahotsav Albums &amp; Event Photo Gallery<br>• <strong>Language Selection (Hindi / English / Gujarati)</strong><br>• App Settings &amp; <strong>🔐 Sangh/Admin Login Portal</strong></td>
+          <td>Admin &amp; Sangh coordinators can update vihar locations, upload Diksha Mahotsav photo albums, and moderate community content.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4. 100% Free-Tier Architecture (/bin/zsh/Month)</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Technology Choice</th>
+          <th>Capacity &amp; Cost Implication</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Mobile App</strong></td>
+          <td>React Native Expo</td>
+          <td>Single cross-platform TypeScript codebase for iOS and Android. Free EAS builds.</td>
+        </tr>
+        <tr>
+          <td><strong>Database &amp; Realtime</strong></td>
+          <td>Supabase PostgreSQL</td>
+          <td>500 MB DB, unlimited API requests, Realtime pub/sub for the Live Anumodna Wall.</td>
+        </tr>
+        <tr>
+          <td><strong>File Storage</strong></td>
+          <td>Firebase Storage</td>
+          <td>5 GB free cloud storage for book PDFs, high-res photos, and audio files.</td>
+        </tr>
+        <tr>
+          <td><strong>Push Notifications</strong></td>
+          <td>Firebase Cloud Messaging (FCM)</td>
+          <td>Completely unlimited and free push notifications for Pravachans and Vihar updates.</td>
+        </tr>
+        <tr>
+          <td><strong>Live Video Streaming</strong></td>
+          <td>YouTube Live API &amp; Embed</td>
+          <td>Zero bandwidth/hosting costs using YouTube's world-class CDN and streaming infrastructure.</td>
+        </tr>
+        <tr>
+          <td><strong>AI Summaries &amp; Search</strong></td>
+          <td>Google Gemini Flash API</td>
+          <td>Generates 2-minute daily pravachan summaries and semantic search within generous free limits.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

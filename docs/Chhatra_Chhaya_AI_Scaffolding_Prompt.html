@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chhatra Chhaya (छत्र छाया) — AI Agent Architecture & Scaffolding Prompt</title>
+  <style>
+    :root {
+      --primary: #A24B0C;
+      --primary-light: #FEE4D4;
+      --sacred-maroon: #6A141A;
+      --sacred-berry: #9F1239;
+      --bg-app: #F4F6FC;
+      --bg-card: #FFFFFF;
+      --text-title: #1E293B;
+      --text-body: #334155;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-app);
+      color: var(--text-body);
+      line-height: 1.6;
+      padding: 30px 20px;
+    }
+    .container {
+      max-width: 940px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      padding: 40px 50px;
+      border: 1px solid var(--border);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #F1F5F9;
+      padding-bottom: 24px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 13px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-top: 4px;
+    }
+    .copy-btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(162, 75, 12, 0.25);
+    }
+    .copy-btn:hover {
+      background: #853B06;
+      transform: translateY(-1px);
+    }
+    .copy-btn:active {
+      transform: translateY(1px);
+    }
+    h2 {
+      color: var(--text-title);
+      font-size: 20px;
+      margin: 32px 0 14px 0;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    h3 {
+      color: var(--primary);
+      font-size: 16px;
+      margin: 20px 0 10px 0;
+    }
+    p {
+      margin-bottom: 14px;
+      font-size: 15px;
+    }
+    ul, ol {
+      margin: 10px 0 18px 24px;
+      font-size: 14.5px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    pre {
+      background: #1E293B;
+      color: #F8FAFC;
+      padding: 18px 20px;
+      border-radius: 12px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      margin: 16px 0 24px 0;
+      line-height: 1.5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    code {
+      background: #F1F5F9;
+      color: var(--sacred-berry);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .callout {
+      background: #FFF7ED;
+      border-left: 4px solid var(--primary);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 20px 0;
+      font-size: 14.5px;
+    }
+    .callout strong {
+      color: var(--primary);
+    }
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 24px 0;
+    }
+    .swatch-card {
+      background: #F8FAFC;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .color-pill {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+    .swatch-label {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-title);
+    }
+    .swatch-hex {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0D9488;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <span class="badge">Official Scaffolding Prompt</span>
+        <h1>Chhatra Chhaya (छत्र छाया)</h1>
+        <div class="subtitle">Under the Divine Grace of Poojya Acharya Shri 108 Vibhav Sagarji Maharaj</div>
+      </div>
+      <button class="copy-btn" onclick="copyFullPrompt()">
+        📋 Copy Prompt for AI Agent
+      </button>
+    </div>
+
+    <div class="callout">
+      <strong>How to Use:</strong> Click <strong>"Copy Prompt for AI Agent"</strong> to copy the entire markdown prompt to your clipboard and send it directly to your AI coding agent (e.g., Antigravity, Claude, ChatGPT, Cursor).
+    </div>
+
+    <h2>🎨 Verified Brand & UI Color Swatches</h2>
+    <div class="swatch-grid">
+      <div class="swatch-card"><div class="color-pill" style="background:#A24B0C;"></div><div><div class="swatch-label">Primary Ochre</div><div class="swatch-hex">#A24B0C</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#6A141A;"></div><div><div class="swatch-label">Sacred Maroon</div><div class="swatch-hex">#6A141A</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#4A0E17;"></div><div><div class="swatch-label">Wine Phone CTA</div><div class="swatch-hex">#4A0E17</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#9F1239;"></div><div><div class="swatch-label">Leaderboard Berry</div><div class="swatch-hex">#9F1239</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#FEE4D4;"></div><div><div class="swatch-label">Pastel Peach</div><div class="swatch-hex">#FEE4D4</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#FFE4E6;"></div><div><div class="swatch-label">Live Wall Rose</div><div class="swatch-hex">#FFE4E6</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#EFF4FF;"></div><div><div class="swatch-label">Periwinkle Input</div><div class="swatch-hex">#EFF4FF</div></div></div>
+      <div class="swatch-card"><div class="color-pill" style="background:#0D9488;"></div><div><div class="swatch-label">Success Green</div><div class="swatch-hex">#0D9488</div></div></div>
+    </div>
+
+    <h2>📄 Full Prompt Preview</h2>
+    <textarea id="raw-prompt" style="display:none;"># 🚀 PROMPT: Scaffold &amp; Architect &quot;Chhatra Chhaya&quot; (छत्र छाया) Mobile App
+
+&gt; **Instructions for AI Agent / Lead Developer:**  
+&gt; Use this prompt to initialize and scaffold the complete React Native Expo mobile application. Follow all architectural decisions, design tokens, folder hierarchies, and database schemas specified below.
+
+---
+
+### Project Identity &amp; Core Philosophy
+You are building **&quot;Chhatra Chhaya&quot; (छत्र छाया)**, the official spiritual companion mobile app dedicated to **Poojya Acharya Shri 108 Vibhav Sagarji Maharaj** (Digambar Jain tradition). 
+
+The app operates on a **100% Free-Tier architecture ($0.00/month)** using **Expo SDK 52+**, **TypeScript**, **NativeWind (Tailwind CSS)**, **Supabase PostgreSQL**, and **Firebase Storage/FCM**. It features an **In-App 3-Tier Role Management system** (eliminating the need for a separate web admin portal).
+
+- **App Name:** Chhatra Chhaya (छत्र छाया)
+- **App Slug / Package:** `chhatra-chhaya`
+- **Bundle ID:** `com.chhatrachhaya.app`
+
+---
+
+## 🎨 1. Exact Design System &amp; Color Palette
+
+Configure `tailwind.config.js` and `src/constants/theme.ts` to strictly match the verified Figma/Mockup designs:
+
+```typescript
+// src/constants/theme.ts
+export const colors = {
+  // Primary CTA &amp; Highlights (Enter App, Login, Play buttons, Active tabs)
+  primary: {
+    DEFAULT: &#x27;#A24B0C&#x27;, // Sacred Terracotta / Ochre
+    dark: &#x27;#853B06&#x27;,    // Pressed state
+    light: &#x27;#C25E17&#x27;,
+  },
+  // Sacred &amp; Brand Accents
+  sacred: {
+    maroon: &#x27;#6A141A&#x27;,  // Ahimsa emblem background &amp; headings
+    wine: &#x27;#4A0E17&#x27;,    // Support phone CTA button
+    berry: &#x27;#9F1239&#x27;,   // Leaderboard CTA &amp; Tagline text
+    gold: &#x27;#D4AF37&#x27;,    // Emblem rays &amp; ritual highlights
+  },
+  // Surfaces &amp; Backgrounds
+  background: {
+    app: &#x27;#F4F6FC&#x27;,     // Tinted cool lavender-grey main background
+    card: &#x27;#FFFFFF&#x27;,    // Pure white cards with subtle shadow
+    input: &#x27;#EFF4FF&#x27;,   // Soft periwinkle for inputs &amp; inactive pills
+  },
+  // Soft Pastel Card Fills
+  pastel: {
+    peach: &#x27;#FEE4D4&#x27;,   // Active Language card (Hindi), Panchang badge
+    peachBorder: &#x27;#FDBA74&#x27;,
+    lavender: &#x27;#EFF4FF&#x27;,// Inactive Language card (English), Info boxes
+    rose: &#x27;#FFE4E6&#x27;,    // Live Anumodna Wall background &amp; Portal badge
+    pink: &#x27;#FCE7F3&#x27;,    // Tithi special strip &amp; Vihar shortcut
+    cyan: &#x27;#CFFAFE&#x27;,    // 48-min Samayik shortcut circle
+    amber: &#x27;#FEF3C7&#x27;,   // E-Gallery shortcut circle
+    orange: &#x27;#FFEDD5&#x27;,  // Namokar Mala shortcut circle
+  },
+  // Status Badges
+  status: {
+    successGreen: &#x27;#0D9488&#x27;, // Dainik Niyam checked state &amp; &quot;स्वीकृत&quot; badge
+    successBg: &#x27;#CCFBF1&#x27;,
+    alertRed: &#x27;#EF4444&#x27;,     // &quot;● लाइव दर्शन&quot; live indicator
+    alertBg: &#x27;#FEE2E2&#x27;,
+    sunYellow: &#x27;#F59E0B&#x27;,    // Sunrise icon
+  },
+  // Typography
+  text: {
+    title: &#x27;#1E293B&#x27;,   // Deep slate navy
+    body: &#x27;#334155&#x27;,    // Medium slate
+    muted: &#x27;#64748B&#x27;,   // Inactive labels, timestamps, placeholders
+    white: &#x27;#FFFFFF&#x27;,
+  },
+  border: {
+    DEFAULT: &#x27;#E2E8F0&#x27;,
+    subtle: &#x27;#EEF2FF&#x27;,
+  }
+};
+```
+
+---
+
+## 📦 2. Dependencies to Install
+
+Execute the following package installations:
+
+```bash
+# Initialize Expo App
+npx create-expo-app@latest chhatra-chhaya --template blank-typescript
+cd chhatra-chhaya
+
+# Navigation &amp; Layout
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+# UI, Icons &amp; Animations
+npm install nativewind tailwindcss react-native-reanimated react-native-gesture-handler
+npx expo install @expo/vector-icons expo-linear-gradient expo-image lucide-react-native
+
+# Backend, Auth, DB &amp; Offline Storage
+npm install @supabase/supabase-js @react-native-async-storage/async-storage
+npx expo install expo-secure-store expo-crypto
+npm install firebase
+
+# Audio &amp; Media Playback
+npx expo install expo-audio expo-av react-native-youtube-iframe react-native-pdf react-native-blob-util
+
+# Native Haptics, Notifications &amp; Localization
+npx expo install expo-haptics expo-notifications expo-localization
+
+# State &amp; Server Cache
+npm install zustand @tanstack/react-query
+```
+
+---
+
+## 🏛️ 3. Core Architectural Requirements &amp; User Flows
+
+### A. 3-Tier In-App Role Management
+1. **Devotee Shravak (`user`):**
+   - **Zero Friction:** NO password or SMS OTP.
+   - On first launch, collect `Name`, `Age`, and `City`. Save locally via `AsyncStorage` and sync to Supabase. Devotees enter immediately.
+2. **Sangh Coordinator (`sangh`):**
+   - Secure in-app login/signup (Email/Password or Sangh Passcode).
+   - Contextual floating `+` buttons appear on Vihar, Pravachan, and Gallery screens to upload updates directly from their phone on the go.
+3. **Master Admin (`admin`):**
+   - Master Control Center in More tab to manage banners, approve sangh coordinators, and moderate community feeds.
+
+### B. Onboarding &amp; Language Flow
+- `Splash Screen` (Ahimsa emblem, Guru title) ➔ `Language Selection` (Hindi [Default], English, Gujarati) ➔ `Devotee Registration (Name, Age, City)` ➔ `Home Screen`.
+- Switch language anytime in Settings.
+
+### C. Continuous Ambient Spiritual Audio Provider
+- Mount a global Audio Context at root (`app/_layout.tsx`) using `expo-audio`.
+- Plays soothing flute / Om / soft Namokar chanting continuously across all screen transitions.
+- Listens to `AppState`: automatically pauses when app is backgrounded and resumes on active.
+- Auto-ducks/pauses whenever the user plays a Pravachan video, Bhajan audio, or starts the Samayik timer.
+- Includes a floating 🔊 / 🔇 toggle button in the top navigation header.
+
+### D. Home Screen &quot;Dainik Niyam&quot; &amp; Live Anumodna Wall
+- Interactive daily checklist of Jain vows (*Ratri Bhojan Tyag, Chauvihar, Dev Darshan, Navkar Mala, Swadhyay*).
+- When a user pledges, their name and city broadcast in real-time via **Supabase Realtime** on the **Live Anumodna Wall** (e.g., *&quot;अमित जैन, जयपुर ने आज &#x27;रात्रि भोजन त्याग&#x27; का नियम लिया&quot;*).
+- Morning check-in prompt: *&quot;Did you observe your Niyam yesterday? Would you like to continue today or take a new one?&quot;*
+
+### E. Shravak Devotion Leaderboard (in Meri Sadhna)
+- Ranked community board encouraging spiritual consistency (*Anumodna*):
+  1. Namokar Mantra Mala Count (from digital 108 counter with haptics)
+  2. Swadhyay Reading Minutes (from PDF reader)
+  3. 4 Digambar Pratikramans Completed
+  4. Dainik Niyam Streak (consecutive days)
+
+### F. Dedicated Scope with Contextual Up-Sangh Coverage
+- Dedicated specifically to **Acharya Shri 108 Vibhav Sagarji Maharaj**.
+- **Vihar Schedule:** Detailed route for Acharya Shri + halting points for Up-Sangh munis.
+- **Jeevan Parichay:** In-depth biography of Acharya Shri + compact cards for Up-Sanghs &amp; Shishya Munis.
+- *Note:* 5 features are deferred from V1: 9 Bhaktis/Chhahdhala, Seva/Jeevdaya, Aaj Ka Sankalp (merged into Dainik Niyam), Ek Achha Karya, and Abhakshya Food Scanner.
+
+---
+
+## 📂 4. Project Directory Structure
+
+Scaffold the project with the following clean, modular structure:
+
+```
+chhatra-chhaya/
+├── app/                               # Expo Router (File-based routing)
+│   ├── _layout.tsx                    # Root Layout (Audio Provider, QueryClient, Auth Provider)
+│   ├── index.tsx                      # Splash screen router
+│   ├── onboarding.tsx                 # Language selection &amp; Devotee profile setup
+│   ├── auth/                          # Sangh &amp; Admin secure in-app login
+│   │   ├── login.tsx                  # Email/Password + Sangh Passcode login
+│   │   └── sangh-register.tsx         # Coordinator request access form
+│   ├── (tabs)/                        # 5 Bottom Navigation Tabs
+│   │   ├── _layout.tsx                # Bottom Tab Bar configuration
+│   │   ├── home.tsx                   # Panchang, Pravachan, Dainik Niyam &amp; Live Wall, Shortcuts
+│   │   ├── library.tsx                # Vidhan, Swadhyay, Bal Sanskar, Bhajans, General PDFs
+│   │   ├── sadhna.tsx                 # 48-Min Samayik, Namokar Mala, 4 Pratikramans, Leaderboard
+│   │   ├── live.tsx                   # YouTube Live stream, Audio archives, 2-Min AI summary
+│   │   └── more.tsx                   # Vihar map, Biography, Calendar, Gallery, Admin Hub
+│   └── admin/                         # In-App Admin / Sangh Management Screens
+│       ├── post-vihar.tsx             # Post/update Vihar halting dates &amp; locations
+│       ├── upload-pravachan.tsx       # Post YouTube live URL or MP3 audio
+│       └── upload-gallery.tsx         # Upload Diksha Mahotsav / event albums
+├── src/
+│   ├── components/                    # Reusable UI components
+│   │   ├── common/                    # Header with Audio Mute toggle, Buttons, Modals
+│   │   ├── home/                      # PanchangCard, PravachanCard, DainikNiyamCard, AnumodnaFeed
+│   │   ├── sadhna/                    # SamayikTimer, MalaCounter, LeaderboardTable
+│   │   └── library/                   # PDFReaderModal, AudioPlayerSheet
+│   ├── context/                       # Global React Contexts
+│   │   ├── AudioContext.tsx           # Continuous background ambient audio controller
+│   │   ├── AuthContext.tsx            # Current role (&#x27;user&#x27; | &#x27;sangh&#x27; | &#x27;admin&#x27;) &amp; profile
+│   │   └── LanguageContext.tsx        # Hindi / English / Gujarati localization
+│   ├── services/                      # API &amp; Backend clients
+│   │   ├── supabase.ts                # Supabase client with AsyncStorage session persistence
+│   │   ├── firebase.ts                # Firebase storage &amp; FCM initialization
+│   │   └── panchang.ts                # Offline Digambar astronomical calendar calculation
+│   ├── store/                         # Zustand state stores
+│   │   ├── useUserStore.ts            # Devotee profile &amp; local storage
+│   │   ├── useSadhnaStore.ts          # Mala counts, Samayik history, Niyam streak
+│   │   └── useAudioStore.ts           # Ambient track state, mute status
+│   ├── types/                         # TypeScript interfaces &amp; types
+│   │   └── index.ts                   # Role, User, Niyam, Vihar, Pravachan, Leaderboard types
+│   └── constants/                     # Colors, Theme, Default Niyams
+│       ├── theme.ts                   # Exact color palette from mockups
+│       └── niyams.ts                  # Standard Digambar daily vows list
+├── supabase/
+│   └── schema.sql                     # Complete PostgreSQL tables, RLS policies &amp; triggers
+├── tailwind.config.js                 # NativeWind styling configuration
+└── app.json                           # Expo app config (name: &quot;Chhatra Chhaya&quot;)
+```
+
+---
+
+## 🗄️ 5. Supabase SQL Schema (`supabase/schema.sql`)
+
+Provide a production-ready SQL script with Row-Level Security (RLS):
+
+```sql
+-- 1. Profiles Table (Devotees + Sangh + Admin)
+CREATE TABLE public.profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  age INTEGER,
+  city TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT &#x27;user&#x27; CHECK (role IN (&#x27;user&#x27;, &#x27;sangh&#x27;, &#x27;admin&#x27;)),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Dainik Niyam Logs Table (Realtime Enabled)
+CREATE TABLE public.dainik_niyam_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_name TEXT NOT NULL,
+  user_city TEXT NOT NULL,
+  niyam_title TEXT NOT NULL,
+  date DATE DEFAULT CURRENT_DATE,
+  status TEXT DEFAULT &#x27;pledged&#x27; CHECK (status IN (&#x27;pledged&#x27;, &#x27;fulfilled&#x27;, &#x27;broken&#x27;)),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER PUBLICATION supabase_realtime ADD TABLE public.dainik_niyam_logs;
+
+-- 3. Devotion Leaderboard Table
+CREATE TABLE public.leaderboard (
+  user_id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_name TEXT NOT NULL,
+  user_city TEXT NOT NULL,
+  mala_count BIGINT DEFAULT 0,
+  swadhyay_minutes INTEGER DEFAULT 0,
+  pratikraman_count INTEGER DEFAULT 0,
+  niyam_streak INTEGER DEFAULT 0,
+  last_updated TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Vihar Updates Table
+CREATE TABLE public.vihar_updates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guru_title TEXT NOT NULL, -- &#x27;Acharya Shri 108 Vibhav Sagarji&#x27; or Up-Sangh Muni name
+  current_city TEXT NOT NULL,
+  temple_name TEXT NOT NULL,
+  arrival_date DATE,
+  departure_date DATE,
+  next_destination TEXT,
+  notes TEXT,
+  updated_by UUID REFERENCES public.profiles(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 5. Pravachans &amp; Media Archives Table
+CREATE TABLE public.pravachans (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  date DATE DEFAULT CURRENT_DATE,
+  youtube_url TEXT,
+  audio_url TEXT,
+  summary_2min TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.dainik_niyam_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.leaderboard ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.vihar_updates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pravachans ENABLE ROW LEVEL SECURITY;
+
+-- Devotee Public Read/Insert Policies
+CREATE POLICY &quot;Public profiles can be created and read&quot; ON public.profiles FOR ALL USING (true);
+CREATE POLICY &quot;Public niyam logs readable by all&quot; ON public.dainik_niyam_logs FOR SELECT USING (true);
+CREATE POLICY &quot;Users can insert their niyam log&quot; ON public.dainik_niyam_logs FOR INSERT WITH CHECK (true);
+CREATE POLICY &quot;Leaderboard readable by all&quot; ON public.leaderboard FOR SELECT USING (true);
+CREATE POLICY &quot;Vihar updates readable by all&quot; ON public.vihar_updates FOR SELECT USING (true);
+CREATE POLICY &quot;Pravachans readable by all&quot; ON public.pravachans FOR SELECT USING (true);
+
+-- Sangh &amp; Admin write policies
+CREATE POLICY &quot;Sangh and Admin can update vihar&quot; ON public.vihar_updates 
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role IN (&#x27;sangh&#x27;, &#x27;admin&#x27;)));
+CREATE POLICY &quot;Sangh and Admin can upload pravachans&quot; ON public.pravachans 
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role IN (&#x27;sangh&#x27;, &#x27;admin&#x27;)));
+```
+
+---
+
+## ⚡ 6. Output &amp; Verification Checklist
+1. Generate the initial codebase with all dependencies cleanly installed.
+2. Verify that `NativeWind` compiles with the custom color tokens (`primary`, `pastel`, `sacred`).
+3. Implement the `AudioContext` so background ambient music plays continuously across tabs with an active mute button.
+4. Scaffold all 5 bottom navigation tabs matching the UI mockups with card containers, pastel highlights, and rounded-2xl styling.
+5. Implement the in-app role switch allowing Sangh coordinators to access upload forms on the go.
+</textarea>
+    <pre><code># 🚀 PROMPT: Scaffold &amp; Architect &quot;Chhatra Chhaya&quot; (छत्र छाया) Mobile App
+
+&gt; **Instructions for AI Agent / Lead Developer:**  
+&gt; Use this prompt to initialize and scaffold the complete React Native Expo mobile application. Follow all architectural decisions, design tokens, folder hierarchies, and database schemas specified below.
+
+---
+
+### Project Identity &amp; Core Philosophy
+You are building **&quot;Chhatra Chhaya&quot; (छत्र छाया)**, the official spiritual companion mobile app dedicated to **Poojya Acharya Shri 108 Vibhav Sagarji Maharaj** (Digambar Jain tradition). 
+
+The app operates on a **100% Free-Tier architecture ($0.00/month)** using **Expo SDK 52+**, **TypeScript**, **NativeWind (Tailwind CSS)**, **Supabase PostgreSQL**, and **Firebase Storage/FCM**. It features an **In-App 3-Tier Role Management system** (eliminating the need for a separate web admin portal).
+
+- **App Name:** Chhatra Chhaya (छत्र छाया)
+- **App Slug / Package:** `chhatra-chhaya`
+- **Bundle ID:** `com.chhatrachhaya.app`
+
+---
+
+## 🎨 1. Exact Design System &amp; Color Palette
+
+Configure `tailwind.config.js` and `src/constants/theme.ts` to strictly match the verified Figma/Mockup designs:
+
+```typescript
+// src/constants/theme.ts
+export const colors = {
+  // Primary CTA &amp; Highlights (Enter App, Login, Play buttons, Active tabs)
+  primary: {
+    DEFAULT: &#x27;#A24B0C&#x27;, // Sacred Terracotta / Ochre
+    dark: &#x27;#853B06&#x27;,    // Pressed state
+    light: &#x27;#C25E17&#x27;,
+  },
+  // Sacred &amp; Brand Accents
+  sacred: {
+    maroon: &#x27;#6A141A&#x27;,  // Ahimsa emblem background &amp; headings
+    wine: &#x27;#4A0E17&#x27;,    // Support phone CTA button
+    berry: &#x27;#9F1239&#x27;,   // Leaderboard CTA &amp; Tagline text
+    gold: &#x27;#D4AF37&#x27;,    // Emblem rays &amp; ritual highlights
+  },
+  // Surfaces &amp; Backgrounds
+  background: {
+    app: &#x27;#F4F6FC&#x27;,     // Tinted cool lavender-grey main background
+    card: &#x27;#FFFFFF&#x27;,    // Pure white cards with subtle shadow
+    input: &#x27;#EFF4FF&#x27;,   // Soft periwinkle for inputs &amp; inactive pills
+  },
+  // Soft Pastel Card Fills
+  pastel: {
+    peach: &#x27;#FEE4D4&#x27;,   // Active Language card (Hindi), Panchang badge
+    peachBorder: &#x27;#FDBA74&#x27;,
+    lavender: &#x27;#EFF4FF&#x27;,// Inactive Language card (English), Info boxes
+    rose: &#x27;#FFE4E6&#x27;,    // Live Anumodna Wall background &amp; Portal badge
+    pink: &#x27;#FCE7F3&#x27;,    // Tithi special strip &amp; Vihar shortcut
+    cyan: &#x27;#CFFAFE&#x27;,    // 48-min Samayik shortcut circle
+    amber: &#x27;#FEF3C7&#x27;,   // E-Gallery shortcut circle
+    orange: &#x27;#FFEDD5&#x27;,  // Namokar Mala shortcut circle
+  },
+  // Status Badges
+  status: {
+    successGreen: &#x27;#0D9488&#x27;, // Dainik Niyam checked state &amp; &quot;स्वीकृत&quot; badge
+    successBg: &#x27;#CCFBF1&#x27;,
+    alertRed: &#x27;#EF4444&#x27;,     // &quot;● लाइव दर्शन&quot; live indicator
+    alertBg: &#x27;#FEE2E2&#x27;,
+    sunYellow: &#x27;#F59E0B&#x27;,    // Sunrise icon
+  },
+  // Typography
+  text: {
+    title: &#x27;#1E293B&#x27;,   // Deep slate navy
+    body: &#x27;#334155&#x27;,    // Medium slate
+    muted: &#x27;#64748B&#x27;,   // Inactive labels, timestamps, placeholders
+    white: &#x27;#FFFFFF&#x27;,
+  },
+  border: {
+    DEFAULT: &#x27;#E2E8F0&#x27;,
+    subtle: &#x27;#EEF2FF&#x27;,
+  }
+};
+```
+
+---
+
+## 📦 2. Dependencies to Install
+
+Execute the following package installations:
+
+```bash
+# Initialize Expo App
+npx create-expo-app@latest chhatra-chhaya --template blank-typescript
+cd chhatra-chhaya
+
+# Navigation &amp; Layout
+npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+# UI, Icons &amp; Animations
+npm install nativewind tailwindcss react-native-reanimated react-native-gesture-handler
+npx expo install @expo/vector-icons expo-linear-gradient expo-image lucide-react-native
+
+# Backend, Auth, DB &amp; Offline Storage
+npm install @supabase/supabase-js @react-native-async-storage/async-storage
+npx expo install expo-secure-store expo-crypto
+npm install firebase
+
+# Audio &amp; Media Playback
+npx expo install expo-audio expo-av react-native-youtube-iframe react-native-pdf react-native-blob-util
+
+# Native Haptics, Notifications &amp; Localization
+npx expo install expo-haptics expo-notifications expo-localization
+
+# State &amp; Server Cache
+npm install zustand @tanstack/react-query
+```
+
+---
+
+## 🏛️ 3. Core Architectural Requirements &amp; User Flows
+
+### A. 3-Tier In-App Role Management
+1. **Devotee Shravak (`user`):**
+   - **Zero Friction:** NO password or SMS OTP.
+   - On first launch, collect `Name`, `Age`, and `City`. Save locally via `AsyncStorage` and sync to Supabase. Devotees enter immediately.
+2. **Sangh Coordinator (`sangh`):**
+   - Secure in-app login/signup (Email/Password or Sangh Passcode).
+   - Contextual floating `+` buttons appear on Vihar, Pravachan, and Gallery screens to upload updates directly from their phone on the go.
+3. **Master Admin (`admin`):**
+   - Master Control Center in More tab to manage banners, approve sangh coordinators, and moderate community feeds.
+
+### B. Onboarding &amp; Language Flow
+- `Splash Screen` (Ahimsa emblem, Guru title) ➔ `Language Selection` (Hindi [Default], English, Gujarati) ➔ `Devotee Registration (Name, Age, City)` ➔ `Home Screen`.
+- Switch language anytime in Settings.
+
+### C. Continuous Ambient Spiritual Audio Provider
+- Mount a global Audio Context at root (`app/_layout.tsx`) using `expo-audio`.
+- Plays soothing flute / Om / soft Namokar chanting continuously across all screen transitions.
+- Listens to `AppState`: automatically pauses when app is backgrounded and resumes on active.
+- Auto-ducks/pauses whenever the user plays a Pravachan video, Bhajan audio, or starts the Samayik timer.
+- Includes a floating 🔊 / 🔇 toggle button in the top navigation header.
+
+### D. Home Screen &quot;Dainik Niyam&quot; &amp; Live Anumodna Wall
+- Interactive daily checklist of Jain vows (*Ratri Bhojan Tyag, Chauvihar, Dev Darshan, Navkar Mala, Swadhyay*).
+- When a user pledges, their name and city broadcast in real-time via **Supabase Realtime** on the **Live Anumodna Wall** (e.g., *&quot;अमित जैन, जयपुर ने आज &#x27;रात्रि भोजन त्याग&#x27; का नियम लिया&quot;*).
+- Morning check-in prompt: *&quot;Did you observe your Niyam yesterday? Would you like to continue today or take a new one?&quot;*
+
+### E. Shravak Devotion Leaderboard (in Meri Sadhna)
+- Ranked community board encouraging spiritual consistency (*Anumodna*):
+  1. Namokar Mantra Mala Count (from digital 108 counter with haptics)
+  2. Swadhyay Reading Minutes (from PDF reader)
+  3. 4 Digambar Pratikramans Completed
+  4. Dainik Niyam Streak (consecutive days)
+
+### F. Dedicated Scope with Contextual Up-Sangh Coverage
+- Dedicated specifically to **Acharya Shri 108 Vibhav Sagarji Maharaj**.
+- **Vihar Schedule:** Detailed route for Acharya Shri + halting points for Up-Sangh munis.
+- **Jeevan Parichay:** In-depth biography of Acharya Shri + compact cards for Up-Sanghs &amp; Shishya Munis.
+- *Note:* 5 features are deferred from V1: 9 Bhaktis/Chhahdhala, Seva/Jeevdaya, Aaj Ka Sankalp (merged into Dainik Niyam), Ek Achha Karya, and Abhakshya Food Scanner.
+
+---
+
+## 📂 4. Project Directory Structure
+
+Scaffold the project with the following clean, modular structure:
+
+```
+chhatra-chhaya/
+├── app/                               # Expo Router (File-based routing)
+│   ├── _layout.tsx                    # Root Layout (Audio Provider, QueryClient, Auth Provider)
+│   ├── index.tsx                      # Splash screen router
+│   ├── onboarding.tsx                 # Language selection &amp; Devotee profile setup
+│   ├── auth/                          # Sangh &amp; Admin secure in-app login
+│   │   ├── login.tsx                  # Email/Password + Sangh Passcode login
+│   │   └── sangh-register.tsx         # Coordinator request access form
+│   ├── (tabs)/                        # 5 Bottom Navigation Tabs
+│   │   ├── _layout.tsx                # Bottom Tab Bar configuration
+│   │   ├── home.tsx                   # Panchang, Pravachan, Dainik Niyam &amp; Live Wall, Shortcuts
+│   │   ├── library.tsx                # Vidhan, Swadhyay, Bal Sanskar, Bhajans, General PDFs
+│   │   ├── sadhna.tsx                 # 48-Min Samayik, Namokar Mala, 4 Pratikramans, Leaderboard
+│   │   ├── live.tsx                   # YouTube Live stream, Audio archives, 2-Min AI summary
+│   │   └── more.tsx                   # Vihar map, Biography, Calendar, Gallery, Admin Hub
+│   └── admin/                         # In-App Admin / Sangh Management Screens
+│       ├── post-vihar.tsx             # Post/update Vihar halting dates &amp; locations
+│       ├── upload-pravachan.tsx       # Post YouTube live URL or MP3 audio
+│       └── upload-gallery.tsx         # Upload Diksha Mahotsav / event albums
+├── src/
+│   ├── components/                    # Reusable UI components
+│   │   ├── common/                    # Header with Audio Mute toggle, Buttons, Modals
+│   │   ├── home/                      # PanchangCard, PravachanCard, DainikNiyamCard, AnumodnaFeed
+│   │   ├── sadhna/                    # SamayikTimer, MalaCounter, LeaderboardTable
+│   │   └── library/                   # PDFReaderModal, AudioPlayerSheet
+│   ├── context/                       # Global React Contexts
+│   │   ├── AudioContext.tsx           # Continuous background ambient audio controller
+│   │   ├── AuthContext.tsx            # Current role (&#x27;user&#x27; | &#x27;sangh&#x27; | &#x27;admin&#x27;) &amp; profile
+│   │   └── LanguageContext.tsx        # Hindi / English / Gujarati localization
+│   ├── services/                      # API &amp; Backend clients
+│   │   ├── supabase.ts                # Supabase client with AsyncStorage session persistence
+│   │   ├── firebase.ts                # Firebase storage &amp; FCM initialization
+│   │   └── panchang.ts                # Offline Digambar astronomical calendar calculation
+│   ├── store/                         # Zustand state stores
+│   │   ├── useUserStore.ts            # Devotee profile &amp; local storage
+│   │   ├── useSadhnaStore.ts          # Mala counts, Samayik history, Niyam streak
+│   │   └── useAudioStore.ts           # Ambient track state, mute status
+│   ├── types/                         # TypeScript interfaces &amp; types
+│   │   └── index.ts                   # Role, User, Niyam, Vihar, Pravachan, Leaderboard types
+│   └── constants/                     # Colors, Theme, Default Niyams
+│       ├── theme.ts                   # Exact color palette from mockups
+│       └── niyams.ts                  # Standard Digambar daily vows list
+├── supabase/
+│   └── schema.sql                     # Complete PostgreSQL tables, RLS policies &amp; triggers
+├── tailwind.config.js                 # NativeWind styling configuration
+└── app.json                           # Expo app config (name: &quot;Chhatra Chhaya&quot;)
+```
+
+---
+
+## 🗄️ 5. Supabase SQL Schema (`supabase/schema.sql`)
+
+Provide a production-ready SQL script with Row-Level Security (RLS):
+
+```sql
+-- 1. Profiles Table (Devotees + Sangh + Admin)
+CREATE TABLE public.profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  age INTEGER,
+  city TEXT NOT NULL,
+  role TEXT NOT NULL DEFAULT &#x27;user&#x27; CHECK (role IN (&#x27;user&#x27;, &#x27;sangh&#x27;, &#x27;admin&#x27;)),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 2. Dainik Niyam Logs Table (Realtime Enabled)
+CREATE TABLE public.dainik_niyam_logs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_name TEXT NOT NULL,
+  user_city TEXT NOT NULL,
+  niyam_title TEXT NOT NULL,
+  date DATE DEFAULT CURRENT_DATE,
+  status TEXT DEFAULT &#x27;pledged&#x27; CHECK (status IN (&#x27;pledged&#x27;, &#x27;fulfilled&#x27;, &#x27;broken&#x27;)),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER PUBLICATION supabase_realtime ADD TABLE public.dainik_niyam_logs;
+
+-- 3. Devotion Leaderboard Table
+CREATE TABLE public.leaderboard (
+  user_id UUID PRIMARY KEY REFERENCES public.profiles(id) ON DELETE CASCADE,
+  user_name TEXT NOT NULL,
+  user_city TEXT NOT NULL,
+  mala_count BIGINT DEFAULT 0,
+  swadhyay_minutes INTEGER DEFAULT 0,
+  pratikraman_count INTEGER DEFAULT 0,
+  niyam_streak INTEGER DEFAULT 0,
+  last_updated TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 4. Vihar Updates Table
+CREATE TABLE public.vihar_updates (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  guru_title TEXT NOT NULL, -- &#x27;Acharya Shri 108 Vibhav Sagarji&#x27; or Up-Sangh Muni name
+  current_city TEXT NOT NULL,
+  temple_name TEXT NOT NULL,
+  arrival_date DATE,
+  departure_date DATE,
+  next_destination TEXT,
+  notes TEXT,
+  updated_by UUID REFERENCES public.profiles(id),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 5. Pravachans &amp; Media Archives Table
+CREATE TABLE public.pravachans (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  date DATE DEFAULT CURRENT_DATE,
+  youtube_url TEXT,
+  audio_url TEXT,
+  summary_2min TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Enable RLS
+ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.dainik_niyam_logs ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.leaderboard ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.vihar_updates ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.pravachans ENABLE ROW LEVEL SECURITY;
+
+-- Devotee Public Read/Insert Policies
+CREATE POLICY &quot;Public profiles can be created and read&quot; ON public.profiles FOR ALL USING (true);
+CREATE POLICY &quot;Public niyam logs readable by all&quot; ON public.dainik_niyam_logs FOR SELECT USING (true);
+CREATE POLICY &quot;Users can insert their niyam log&quot; ON public.dainik_niyam_logs FOR INSERT WITH CHECK (true);
+CREATE POLICY &quot;Leaderboard readable by all&quot; ON public.leaderboard FOR SELECT USING (true);
+CREATE POLICY &quot;Vihar updates readable by all&quot; ON public.vihar_updates FOR SELECT USING (true);
+CREATE POLICY &quot;Pravachans readable by all&quot; ON public.pravachans FOR SELECT USING (true);
+
+-- Sangh &amp; Admin write policies
+CREATE POLICY &quot;Sangh and Admin can update vihar&quot; ON public.vihar_updates 
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role IN (&#x27;sangh&#x27;, &#x27;admin&#x27;)));
+CREATE POLICY &quot;Sangh and Admin can upload pravachans&quot; ON public.pravachans 
+  FOR ALL USING (EXISTS (SELECT 1 FROM public.profiles WHERE id = auth.uid() AND role IN (&#x27;sangh&#x27;, &#x27;admin&#x27;)));
+```
+
+---
+
+## ⚡ 6. Output &amp; Verification Checklist
+1. Generate the initial codebase with all dependencies cleanly installed.
+2. Verify that `NativeWind` compiles with the custom color tokens (`primary`, `pastel`, `sacred`).
+3. Implement the `AudioContext` so background ambient music plays continuously across tabs with an active mute button.
+4. Scaffold all 5 bottom navigation tabs matching the UI mockups with card containers, pastel highlights, and rounded-2xl styling.
+5. Implement the in-app role switch allowing Sangh coordinators to access upload forms on the go.
+</code></pre>
+  </div>
+
+  <div class="toast" id="toast">✅ Prompt copied to clipboard! Ready to paste into your AI agent.</div>
+
+  <script>
+    function copyFullPrompt() {
+      const text = document.getElementById('raw-prompt').value;
+      navigator.clipboard.writeText(text).then(() => {
+        const toast = document.getElementById('toast');
+        toast.style.display = 'block';
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 3500);
+      });
+    }
+  </script>
+</body>
+</html>
